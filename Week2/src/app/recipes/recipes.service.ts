@@ -23,7 +23,7 @@ export class RecipesService {
       id: 'r3',
       title: 'Pizza Margerita',
       imageUrl: 'https://img.taste.com.au/4VXyMX9P/taste/2016/11/pizza-margherita-39581-1.jpeg',
-      ingredients: ['Keju', 'Tomat', 'Daging']
+      ingredients: ['Keju', 'Tomat', 'Daging', "Adonan Pizza", "Basil"]
     }
   ]
   constructor() { }
