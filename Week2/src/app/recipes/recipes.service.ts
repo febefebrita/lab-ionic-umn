@@ -32,6 +32,6 @@ export class RecipesService {
     return [...this.recipes];
   }
   getRecipe(recipeId: string){
-    
+    return {...this.recipes.find(recipes=>recipes.id === recipeId)};
   }
 }
