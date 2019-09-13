@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController, ModalController } from '@ionic/angular';
+import { NavController, ModalController, ActionSheetController } from '@ionic/angular';
 import { PlacesService } from '../../places.service';
 import { Place } from '../../place.model';
 import { CreateBookingComponent } from '../../../bookings/create-booking/create-booking.component';
@@ -15,7 +15,8 @@ export class PlaceDetailPage implements OnInit {
   constructor(private route: ActivatedRoute,
      private navCtrl:NavController,
      private placesService: PlacesService,
-     private modalCtrl: ModalController) { }
+     private modalCtrl: ModalController,
+     private actionSheetCtrl : ActionSheetController) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
@@ -26,21 +27,37 @@ export class PlaceDetailPage implements OnInit {
       this.place = this.placesService.getPlace(paramMap.get('placeId'));
     });
   }
-  onBookPlace(){
-    this.modalCtrl
-    .create({
-      component: CreateBookingComponent,
-      componentProps: { selectedPlace: this.place}
-    })
-    .then(modalEl => {
-      modalEl.present();
-      return modalEl.onDidDismiss();
-    })
-    .then(resultData => {
-      console.log(resultData.data, resultData.role);
-      if(resultData.role === 'confirm'){
-        console.log('BOOKED');
-      }
+  async onBookPlace(){
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: 'Book Place',
+      buttons: [{
+        text: 'Book w/ Random Date',
+        handler: () => {
+          this.modalCtrl
+          .create({
+            component: CreateBookingComponent,
+            componentProps: { selectedPlace: this.place}
+          })
+          .then(modalEl => {
+            modalEl.present();
+            return modalEl.onDidDismiss();
+          })
+          .then(resultData => {
+            console.log(resultData.data, resultData.role);
+            if(resultData.role === 'confirm'){
+              console.log('BOOKED');
+            }
+          });
+        }
+      },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+      }]
     });
+    await actionSheet.present();
   }
 }
