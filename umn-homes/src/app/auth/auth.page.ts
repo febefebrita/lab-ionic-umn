@@ -12,7 +12,7 @@ export class AuthPage implements OnInit {
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
-    this.authService.login();
+   
   }
   onLogin(){
     this.authService.login();
