@@ -8,19 +8,19 @@
     <ion-content>
       <ion-list>
         <ion-menu-toggle>
-          <ion-item lines="none">
+          <ion-item lines="none" [routerLink]="['/','places','discover']">
             <ion-icon name="checkbox-outline" slot="start"></ion-icon>
             <ion-label>Discover Places</ion-label>
           </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle>
-          <ion-item lines="none">
+          <ion-item lines="none" [routerLink]="['/','bookings']">
             <ion-icon name="business" slot="start"></ion-icon>
             <ion-label>Your Bookings</ion-label>
           </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle>
-          <ion-item lines="none" (click)="onLogout()">
+          <ion-item lines="none" (click)="onLogout()" [routerLink]="['/','auth']">
             <ion-icon name="exit" slot="start"></ion-icon>
             <ion-label>Logout</ion-label>
           </ion-item>
