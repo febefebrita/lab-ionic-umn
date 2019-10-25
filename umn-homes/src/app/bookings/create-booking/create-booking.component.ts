@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Place } from 'src/app/places/place.model';
 import { ModalController, LoadingController } from '@ionic/angular';
 import { BookingService } from '../booking.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-create-booking',
@@ -11,11 +12,13 @@ import { BookingService } from '../booking.service';
 export class CreateBookingComponent implements OnInit {
   @Input() selectedPlace: Place;
   @Input() selectedMode: 'select' | 'random';
+  //@ViewChild('f') form: NgForm;
   startDate: string;
   endDate: string;
 
   constructor(private modalCtrl: ModalController,
-    private loadingCtrl: LoadingController, private bookingSrvc: BookingService) { }
+    private loadingCtrl: LoadingController, 
+    private bookingSrvc: BookingService) { }
   
   ngOnInit() {
     console.log(this.selectedPlace);
@@ -41,6 +44,16 @@ export class CreateBookingComponent implements OnInit {
   }
 
   onBookPlace(){
+    // if(!this.form.valid || this.datesValid){
+    //   return;
+    // }
+    // this.modalCtrl.dismiss({bookingData: {
+    //   firstName: this.form.value['first-name'],
+    //   lastName: this.form.value['last-name'],
+    //   guestNumber: this.form.value['guest-number'],
+    //   startDate: this.form.value['date-from'],
+    //   endDate: this.form.value['date-to']
+    // }},'confirm');
     this.loadingCtrl.create({
       keyboardClose:true,
       message:'Booking the place...'
@@ -58,5 +71,11 @@ export class CreateBookingComponent implements OnInit {
     this.modalCtrl.dismiss({message: 'This is a dummy message!'},'confirm');
     this.bookingSrvc.addToMyBookings(this.selectedPlace);
   }
+
+  // datesValid(){
+  //   const startDate = new Date(this.form.value['date-from']);
+  //   const endDate = new Date(this.form.value['date-to']);
+  //   return endDate > startDate;
+  // }
 
 }
